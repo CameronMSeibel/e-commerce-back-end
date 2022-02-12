@@ -26,8 +26,12 @@ router.post('/', async (req, res) => {
   res.status(400).json(result);
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+router.put('/:id', async (req, res) => {
+  const result = await Tag.update(req.params, {where: {id: req.params.id}});
+  if(result){
+    return res.status(200).json(result);
+  }
+  res.status(400).json(result);
 });
 
 router.delete('/:id', async (req, res) => {
